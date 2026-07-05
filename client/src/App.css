@@ -1,0 +1,828 @@
+/*======================================================
+ AI RESEARCH OBSERVATORY
+ Knowledge Universe Design System
+ Version 2.0
+=======================================================*/
+
+
+/*=========================
+        GOOGLE FONT
+==========================*/
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+
+/*=========================
+      DESIGN TOKENS
+==========================*/
+
+:root{
+
+/* Cosmic Colours */
+
+--space:#050816;
+
+--space-2:#08112B;
+
+--nebula:#141B47;
+
+--glass:rgba(18,25,52,.55);
+
+--glass-light:rgba(255,255,255,.05);
+
+--border:rgba(255,255,255,.08);
+
+/* AI Colours */
+
+--primary:#5B7CFF;
+
+--secondary:#8B5CF6;
+
+--cyan:#22D3EE;
+
+--gold:#FFD166;
+
+--green:#22C55E;
+
+/* Text */
+
+--text:#F9FAFB;
+
+--muted:#B8C1E1;
+
+/* Shadows */
+
+--shadow:
+
+0 15px 45px rgba(0,0,0,.45);
+
+--glow:
+
+0 0 35px rgba(91,124,255,.30);
+
+--radius:22px;
+
+}
+
+
+/*=========================
+        RESET
+==========================*/
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+}
+
+
+/*=========================
+        BODY
+==========================*/
+
+body{
+
+font-family:"Space Grotesk",sans-serif;
+
+color:var(--text);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+background:
+
+radial-gradient(circle at top,
+
+#27357A 0%,
+
+#10183E 28%,
+
+#050816 72%);
+
+position:relative;
+
+}
+
+
+/*=========================
+  STARS BACKGROUND
+==========================*/
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background-image:
+
+radial-gradient(white 1px,transparent 1px),
+
+radial-gradient(#8B5CF6 1px,transparent 1px),
+
+radial-gradient(#22D3EE 1px,transparent 1px);
+
+background-size:
+
+160px 160px,
+
+230px 230px,
+
+310px 310px;
+
+opacity:.25;
+
+pointer-events:none;
+
+animation:
+
+starsMove 140s linear infinite;
+
+}
+
+
+/*=========================
+   GLOWING NEBULA
+==========================*/
+
+body::after{
+
+content:"";
+
+position:fixed;
+
+width:900px;
+
+height:900px;
+
+left:50%;
+
+top:-250px;
+
+transform:translateX(-50%);
+
+background:
+
+radial-gradient(circle,
+
+rgba(91,124,255,.35),
+
+transparent 70%);
+
+filter:blur(100px);
+
+pointer-events:none;
+
+animation:
+
+nebulaPulse 12s ease-in-out infinite;
+
+}
+
+
+/*=========================
+        APP
+==========================*/
+
+.app{
+
+max-width:1300px;
+
+margin:auto;
+
+padding:50px 30px;
+
+position:relative;
+
+z-index:10;
+
+}
+
+/*======================================================
+  OBSERVATORY HEADER
+======================================================*/
+
+/* Main Header */
+
+header{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+    position:relative;
+
+}
+
+/* Main Title */
+
+h1{
+
+    font-size:clamp(2.8rem,6vw,4.6rem);
+
+    font-weight:700;
+
+    letter-spacing:-2px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #FFFFFF,
+    #7DD3FC,
+    #A78BFA,
+    #FFD166);
+
+    background-size:300%;
+
+    -webkit-text-fill-color:transparent;
+
+    animation:
+    titleGlow 8s linear infinite;
+}
+
+/* Animated Line */
+
+h1::after{
+
+    content:"";
+
+    display:block;
+
+    width:170px;
+
+    height:5px;
+
+    margin:18px auto;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+    90deg,
+    var(--cyan),
+    var(--secondary),
+    var(--gold));
+
+    box-shadow:
+    0 0 25px rgba(34,211,238,.6);
+
+}
+
+/* Tagline */
+
+.tagline{
+
+    color:var(--muted);
+
+    font-size:1.1rem;
+
+    max-width:700px;
+
+    margin:18px auto;
+
+    line-height:1.8;
+
+}
+
+/* Floating Header Glow */
+
+header::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    left:50%;
+
+    top:-120px;
+
+    transform:translateX(-50%);
+
+    background:
+
+    radial-gradient(circle,
+
+    rgba(91,124,255,.25),
+
+    transparent 70%);
+
+    filter:blur(70px);
+
+    z-index:-1;
+
+}
+
+/* Upload Status */
+
+.selected-file{
+
+    display:inline-block;
+
+    margin-top:18px;
+
+    padding:10px 20px;
+
+    border-radius:999px;
+
+    background:
+
+    rgba(91,124,255,.12);
+
+    border:
+
+    1px solid rgba(91,124,255,.35);
+
+    color:#D6E3FF;
+
+    font-size:.95rem;
+
+    box-shadow:
+
+    var(--glow);
+
+}
+
+/*======================================================
+  GLASS CARD SYSTEM
+======================================================*/
+
+.card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    margin-bottom:30px;
+
+    padding:28px;
+
+    border-radius:var(--radius);
+
+    background:var(--glass);
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+}
+
+/* Light reflection */
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-150%;
+
+    width:80%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.08),
+            transparent
+        );
+
+    transition:left .9s;
+}
+
+.card:hover::before{
+
+    left:180%;
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:rgba(91,124,255,.35);
+
+    box-shadow:
+        var(--shadow),
+        var(--glow);
+}
+
+/*======================================================
+  SECTION TITLES
+======================================================*/
+
+.card h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:22px;
+
+    color:white;
+
+    font-size:1.45rem;
+
+    font-weight:600;
+}
+
+.card h2::before{
+
+    content:"";
+
+    width:10px;
+
+    height:30px;
+
+    border-radius:999px;
+
+    background:var(--primary);
+
+    box-shadow:0 0 12px var(--primary);
+}
+
+/*======================================================
+  PARAGRAPHS
+======================================================*/
+
+.card p{
+
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+/*======================================================
+  BUTTONS
+======================================================*/
+
+button{
+
+    margin-top:20px;
+
+    padding:15px 28px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    transition:.3s;
+}
+
+button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 30px rgba(91,124,255,.45);
+}
+
+/*======================================================
+  FILE INPUT
+======================================================*/
+
+input[type=file]{
+
+    margin-top:20px;
+
+    color:white;
+
+    padding:12px;
+
+    width:100%;
+}
+
+/*======================================================
+  CARD COLOURS
+======================================================*/
+
+/* Upload */
+
+.upload-card{
+
+    border-left:4px solid var(--cyan);
+}
+
+/* Summary */
+
+.summary-card{
+
+    border-left:4px solid var(--primary);
+}
+
+/* AI Message */
+
+.message-card{
+
+    border-left:4px solid var(--green);
+}
+
+/* Key Concepts */
+
+.concepts-card{
+
+    border-left:4px solid var(--secondary);
+}
+
+/* Quiz */
+
+.quiz-card{
+
+    border-left:4px solid var(--gold);
+}
+/*==================================================
+        KNOWLEDGE CORE
+==================================================*/
+
+.knowledge-core{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:60px auto;
+
+    position:relative;
+
+}
+
+.core{
+
+    width:260px;
+
+    height:260px;
+
+    position:relative;
+
+}
+
+/*==============================
+            SPHERE
+================================*/
+
+.sphere{
+
+    position:absolute;
+
+    inset:50% auto auto 50%;
+
+    width:120px;
+
+    height:120px;
+
+    transform:translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(circle,
+
+    #7DD3FC,
+
+    #5B7CFF,
+
+    #4338CA,
+
+    #050816);
+
+    box-shadow:
+
+    0 0 60px #5B7CFF,
+
+    0 0 120px rgba(91,124,255,.5);
+
+    animation:
+
+    pulse 5s ease-in-out infinite;
+}
+
+/*==============================
+          RINGS
+================================*/
+
+.ring{
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.12);
+
+}
+
+.ring-1{
+
+    animation:spin 18s linear infinite;
+}
+
+.ring-2{
+
+    transform:scale(.82);
+
+    animation:spinReverse 12s linear infinite;
+}
+
+.ring-3{
+
+    transform:scale(.62);
+
+    animation:spin 8s linear infinite;
+}
+
+/*==============================
+          PARTICLES
+================================*/
+
+.core::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-25px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(circle,
+
+    rgba(34,211,238,.45),
+
+    transparent 70%);
+
+    filter:blur(25px);
+
+    animation:
+
+    pulse 6s infinite;
+}
+
+.core-title{
+
+    margin-top:35px;
+
+    color:white;
+
+    font-size:2rem;
+
+}
+
+.core-text{
+
+    color:var(--muted);
+
+    margin-top:10px;
+
+    text-align:center;
+
+    max-width:500px;
+
+}
+
+/*==================================================
+        ANIMATIONS
+==================================================*/
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+@keyframes spinReverse{
+
+    from{
+
+        transform:scale(.82) rotate(360deg);
+
+    }
+
+    to{
+
+        transform:scale(.82) rotate(0deg);
+
+    }
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:translate(-50%,-50%) scale(.95);
+
+    }
+
+    50%{
+
+        transform:translate(-50%,-50%) scale(1.05);
+
+    }
+
+    100%{
+
+        transform:translate(-50%,-50%) scale(.95);
+
+    }
+
+}
+
+@keyframes titleGlow{
+
+    0%{
+
+        background-position:0%;
+
+    }
+
+    100%{
+
+        background-position:300%;
+
+    }
+
+}
+
+@keyframes starsMove{
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+    to{
+
+        transform:translateY(-400px);
+
+    }
+
+}
+
+@keyframes nebulaPulse{
+
+    0%,100%{
+
+        opacity:.45;
+
+    }
+
+    50%{
+
+        opacity:.9;
+
+    }
+
+}
