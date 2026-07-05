@@ -31,6 +31,7 @@ For every key concept include:
 -one real-world example
 
 Return ONLY valid JSON
+If you cannot answer, still return valid JSON. Never wrap the JSON in markdown
 `
 
 
