@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.110.0",
+    "openai": "^6.45.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
@@ -25,3 +27,4 @@
     "vite": "^8.1.3"
   }
 }
+
