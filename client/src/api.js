@@ -5,25 +5,20 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 export async function sendToAI(documentText) {
   console.log("📃 Messenger leaving...");
 
-  const response = await fetch(
-    "https://openrouter.ai/api/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: "poolside/laguna-xs-2.1:free",
-        messages: [
-          {
-            role: "user",
-            content: `${RESEARCH_PROMPT}\n\n${documentText}`,
-          },
-        ],
-      }),
-    }
-  );
+ const response = await fetch("/api/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    prompt: `${RESEARCH_PROMPT}\n\n${documentText}`,
+  }),
+});
+
+const data = await response.json();
+
+return JSON.parse(data.response);
+
   console.log("📃 Messenger leaving...");
   if (!response.ok) {
     const error = await response.json();
